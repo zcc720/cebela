@@ -359,8 +359,8 @@ def clear_dir(type):
             shutil.rmtree(all_path('down/Annotations'))
         if shutil.os.path.exists(all_path('down/Annotations')):
             shutil.rmtree(all_path('down/Annotations'))
-        shutil.os.mkdir(all_path('down/Annotations'))
-        shutil.os.mkdir(all_path('down/JPEGImages'))
+        shutil.os.makedirs(all_path('down/Annotations'))
+        shutil.os.makedirs(all_path('down/JPEGImages'))
 
 
 def retate_handle(line,type):
@@ -379,14 +379,14 @@ def retate_handle(line,type):
     #左转90度
     elif type==2:
         im=im.transpose(Image.ROTATE_90)
-        head = headstr % (filename_, h, w)
+        head = headstr % ('l_'+filename_, h, w)
         x1 , y1, x2, y2=ymin, w-xmax, ymax, w-xmin
         writexml(filename_, head,x1, y1, x2, y2 , tailstr,type=type)
         im.save(all_path('left/JPEGImages/%s' % ('l_'+filename_)))
     # 右转90度
     elif type==3:
         im = im.transpose(Image.ROTATE_270)
-        head = headstr % (filename_, h, w)
+        head = headstr % ('r_'+filename_, h, w)
         x1, y1, x2, y2 = h - ymax, xmin, h - ymin, xmax
         writexml(filename_, head, x1, y1, x2, y2, tailstr,type=type)
         im.save(all_path('right/JPEGImages/%s' % ('r_' + filename_)))
@@ -406,6 +406,6 @@ def excute_datasets(type):
 
 
 if __name__ == '__main__':
-    for t in [1,2]:
+    for t in [3,2]:
         clear_dir(type=t)
         excute_datasets(type=t)
